@@ -6,15 +6,27 @@ const StockList = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
+      
       try {
-        const response = await finnHub.get("/quote", {
-          params: {
-            symbol: "MSFT",
-          },
-        });
-        console.log(response.data);
+        const responses = await Promise.all(
+          watchList.map((stock) => {
+            return finnHub.get("/quote", {
+              params: {
+                symbol: stock,
+              },
+            });
+          })
+        );
+
+        console.log(responses);
+      const dataExtract = responses.map(response => {
+        return{
+          data: response.data,
+          symbol: response.config.params.symbol
+        }  
+        })
         if (isMounted) {
-          setStock(response.data);
+          setStock(dataExtract);
         }
       } catch (err) {
         console.log(err);
