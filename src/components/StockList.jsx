@@ -11,10 +11,20 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import "../App.css";
 const StockList = () => {
   const [stock, setStock] = useState();
   const [watchList, setWatchList] = useState(["GOOGL", "MSFT", "AMZN"]);
+
+  const changeColor = (change) => {
+    return change > 0 ? "success" : "danger";
+  };
+
+  const renderIcon = (change) => {
+    return change > 0 ? <BsFillCaretDownFill /> : <BsFillCaretUpFill />;
+  };
+
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -49,7 +59,7 @@ const StockList = () => {
 
   return (
     <TableContainer>
-      <Table size="md" variant="striped" colorScheme="teal">
+      <Table size="md">
         <Thead>
           <Tr>
             <Th>Name</Th>
@@ -68,8 +78,13 @@ const StockList = () => {
               <Tr key={stockData.symbol}>
                 <Th>{stockData.symbol}</Th>
                 <Td>{stockData.data.c}</Td>
-                <Td>{stockData.data.d}</Td>
-                <Td>{stockData.data.dp}</Td>
+                <Td className={`text-${changeColor(stockData.data.id)}`}>
+                  {stockData.data.d} {renderIcon(stockData.data.id)}
+                </Td>
+                <Td className={`text-${changeColor(stockData.data.id)}`}>
+                  {stockData.data.dp} {renderIcon(stockData.data.id)}
+                </Td>
+
                 <Td>{stockData.data.h}</Td>
                 <Td>{stockData.data.l}</Td>
                 <Td>{stockData.data.o}</Td>
