@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.1",
-    "@choc-ui/chakra-autocomplete": "^5.1.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "axios": "^1.2.0",
