@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import finnHub from "../api/finnHub.js";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { WatchListContext } from "../context/watchListContext.jsx";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import "../App.css";
+
 const StockList = () => {
   const [stock, setStock] = useState();
-  const [watchList, setWatchList] = useState(["GOOGL", "MSFT", "AMZN"]);
+  const { watchList } = useContext(WatchListContext);
 
   const changeColor = (change) => {
     return change > 0 ? "success" : "danger";
@@ -45,7 +45,6 @@ const StockList = () => {
             symbol: response.config.params.symbol,
           };
         });
-        console.log(dataExtract);
         if (isMounted) {
           setStock(dataExtract);
         }
@@ -55,7 +54,7 @@ const StockList = () => {
     };
     fetchData();
     return () => (isMounted = false);
-  }, []);
+  }, [watchList]);
 
   return (
     <TableContainer>

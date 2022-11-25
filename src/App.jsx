@@ -2,18 +2,20 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import StockDetail from "./pages/StockDetail";
 import StockOverView from "./pages/StockOverview";
-
+import { WatchListContextProvider } from "./context/watchListContext";
 import "./App.css";
 
 function App() {
   return (
     <main>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<StockOverView />} />
-          <Route path="/detail/:stock" element={<StockDetail />} />
-        </Routes>
-      </BrowserRouter>
+      <WatchListContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<StockOverView />} />
+            <Route path="/detail/:stock" element={<StockDetail />} />
+          </Routes>
+        </BrowserRouter>
+      </WatchListContextProvider>
     </main>
   );
 }

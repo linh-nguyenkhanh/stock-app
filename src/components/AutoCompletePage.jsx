@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import finnHub from "../api/finnHub";
-
+import { WatchListContext } from "../context/watchListContext";
 import { Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 const AutoCompletePage = () => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+
+  const { addStock, deleteStock } = useContext(WatchListContext);
 
   const renderDropDown = () => {
     const dropDownClass = search ? "show" : null;
@@ -13,7 +15,14 @@ const AutoCompletePage = () => {
       <ul className={`dropdown-menu ${dropDownClass}`}>
         {results.map((result) => {
           return (
-            <li className="item-dropdown" key={result.symbol}>
+            <li
+              onClick={() => {
+                addStock(result.symbol);
+                setSearch("");
+              }}
+              className="item-dropdown"
+              key={result.symbol}
+            >
               {result.description} ({result.symbol})
             </li>
           );
@@ -49,7 +58,7 @@ const AutoCompletePage = () => {
     <Flex p="10" justify="center" align="center" w="full">
       <FormControl w="60">
         <FormLabel htmlFor="search" fontSize="lg">
-          Stock Search
+          Search Stock
         </FormLabel>
 
         <Input
