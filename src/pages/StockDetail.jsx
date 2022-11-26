@@ -1,7 +1,8 @@
 import React from "react";
-
-  const StockDetail = () => {
-  return <div>StockDetail</div>;
+import { useParams } from "react-router-dom";
+const StockDetail = () => {
+  const { stock } = useParams();
+  return <div>StockDetail {stock}</div>;
 };
 
 export default StockDetail;

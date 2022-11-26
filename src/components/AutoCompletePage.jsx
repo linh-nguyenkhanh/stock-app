@@ -9,7 +9,7 @@ const AutoCompletePage = () => {
 
   const { addStock, deleteStock } = useContext(WatchListContext);
 
-  const renderDropDown = () => {
+  const renderDropDownList = () => {
     const dropDownClass = search ? "show" : null;
     return (
       <ul className={`dropdown-menu ${dropDownClass}`}>
@@ -74,7 +74,7 @@ const AutoCompletePage = () => {
           p="1.2em"
           borderRadius="6px"
         />
-        {renderDropDown()}
+        <div>{renderDropDownList()}</div>
       </FormControl>
     </Flex>
   );

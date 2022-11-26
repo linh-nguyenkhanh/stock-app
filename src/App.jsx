@@ -12,7 +12,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<StockOverView />} />
-            <Route path="/detail/:stock" element={<StockDetail />} />
+            <Route path="/detail/:stockID" element={<StockDetail />} />
           </Routes>
         </BrowserRouter>
       </WatchListContextProvider>

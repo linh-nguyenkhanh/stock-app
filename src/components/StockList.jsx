@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import finnHub from "../api/finnHub.js";
 import {
   Table,
@@ -16,6 +17,7 @@ import "../App.css";
 const StockList = () => {
   const [stock, setStock] = useState();
   const { watchList } = useContext(WatchListContext);
+  const navigate = useNavigate();
 
   const changeColor = (change) => {
     return change > 0 ? "success" : "danger";
@@ -56,6 +58,10 @@ const StockList = () => {
     return () => (isMounted = false);
   }, [watchList]);
 
+  const handleStockSelect = (stockId) => {
+    navigate(`detail/${stockId}`);
+  };
+
   return (
     <TableContainer>
       <Table size="md">
@@ -74,7 +80,11 @@ const StockList = () => {
         <Tbody>
           {stock?.map((stockData) => {
             return (
-              <Tr key={stockData.symbol}>
+              <Tr
+                style={{ cursor: "pointer" }}
+                onClick={() => handleStockSelect(stockData.symbol)}
+                key={stockData.symbol}
+              >
                 <Th>{stockData.symbol}</Th>
                 <Td>{stockData.data.c}</Td>
                 <Td className={`text-${changeColor(stockData.data.id)}`}>
